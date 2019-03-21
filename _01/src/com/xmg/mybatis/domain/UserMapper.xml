@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xmg.mybatis.domain.UserMapper">
+
+    <!--
+        keyColumn:主键的列
+        keyProperty:主键对应的属性
+        useGeneratedKeys:true(使用数据库自动生成的主键id值设置到对象的OID中)
+        parameterType:参数的类型
+    -->
+    <insert id="add" keyColumn="id" keyProperty="id" useGeneratedKeys="true" parameterType="com.xmg.mybatis.domain.User">
+        insert into user(name,email,age,borndate) values (#{name},#{email},#{age},#{bornDate})
+    </insert>
+
+    <!-- 修改 -->
+    <update id="update" parameterType="com.xmg.mybatis.domain.User">
+        update user set name = #{name},email=#{email},age=#{age},borndate=#{bornDate}
+        where id = #{id}
+    </update>
+    
+    <!-- get -->
+    <select id="get" parameterType="long" resultType="com.xmg.mybatis.domain.User">
+        select id,name,email,age,borndate from user where id = #{id}
+    </select>
+
+    <!-- delete -->
+    <delete id="delete" parameterType="long">
+        delete from user where id = #{id}
+    </delete>
+
+    <!-- list -->
+    <select id="list" resultType="com.xmg.mybatis.domain.User">
+        select id,name,email,age,borndate from user
+    </select>
+</mapper>

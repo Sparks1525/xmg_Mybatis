@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- mybatis的配置 -->
+<configuration>
+
+	<!-- 通过properties引入参数 -->
+	<properties resource="db.properties"/>
+	<!-- 可以在properties里面添加property,设置参数值
+		<properties name="driver" values="com.mysql.jdbc.Driver"/>
+	-->
+
+	<!-- 为类型添加别名 -->
+	<typeAliases>
+		<typeAlias type="com.xmg.mybatis.domain.User" alias="User"/>
+	</typeAliases>
+
+	<!-- 环境?? default对应的id,代表mybatis这次默认使用的数据库环境 -->
+	<environments default="default">
+		<!-- 一个environment代表一个数据库环境 -->
+		<environment id="default">
+			<!-- 配置事务管理 直接配置JDBC (一定要大写),代表使用JDBC事务; -->
+			<transactionManager type="JDBC"/>
+			<!-- 数据库连接池要求大写 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}"/>
+				<property name="url" value="${url}"/>
+				<property name="username" value="${username}"/>
+				<property name="password" value="${password}"/>
+			</dataSource>
+		</environment>
+	</environments>
+
+	<!-- 配置mybatis需要管理的mapper文件 -->
+	<mappers>
+		<mapper resource="com/xmg/mybatis/domain/UserMapper.xml"/>
+	</mappers>
+
+</configuration>
