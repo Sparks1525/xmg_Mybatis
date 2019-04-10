@@ -11,6 +11,8 @@
         在mapper中指定keyProperty属性,使用MyBatis往MySQL数据库中插入一条记录后，
         可以通过xxx.getId返回该条记录的自增主键值
 
+        #{name}值取自User字段name或getName()方法名(通过bean注入)
+
         useGeneratedKeys:true(使用数据库自动生成的主键id值设置到对象的OID中)
         parameterType:参数的类型
     -->
