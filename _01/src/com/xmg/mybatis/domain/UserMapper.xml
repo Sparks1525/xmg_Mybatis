@@ -14,6 +14,8 @@
         #{name}值取自User字段name或getName()方法名(通过bean注入)
 
         useGeneratedKeys:true(使用数据库自动生成的主键id值设置到对象的OID中)
+
+
         parameterType:参数的类型
     -->
     <insert id="add" keyColumn="id" keyProperty="id" useGeneratedKeys="true" parameterType="com.xmg.mybatis.domain.User">
