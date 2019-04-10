@@ -7,9 +7,9 @@
 <configuration>
 
 	<!-- 环境?? default对应的id,代表mybatis这次默认使用的数据库环境 -->
-	<environments default="default">
+	<environments default="default"> <!--mybatis可以配置多种环境 ,default指定使用某种环境。可以达到快速切换环境-->
 		<!-- 一个environment代表一个数据库环境 -->
-		<environment id="default">
+		<environment id="default"> <!-- 置一个具体的环境信息；必须有两个标签；id代表当前环境的唯一标识 -->
 			<!-- 配置事务管理 直接配置JDBC (一定要大写),代表使用JDBC事务; -->
 			<transactionManager type="JDBC"/>
 			<!-- 数据库连接池要求大写 -->
