@@ -110,7 +110,6 @@ public class HelloMapperTest {
 
     @Test
     public void testLogin2(){
-        Map<String,Object> root = new HashMap<>();
         SqlSession session = MybatisUtil.openSession();
         UserMapper mapper = session.getMapper(UserMapper.class);
         User u = mapper.login2("update","3");
