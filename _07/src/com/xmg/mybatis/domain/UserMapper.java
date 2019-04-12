@@ -2,6 +2,7 @@ package com.xmg.mybatis.domain;
 
 import org.apache.ibatis.annotations.*;
 import java.util.List;
+import java.util.Map;
 
 public interface UserMapper {
 
@@ -31,4 +32,8 @@ public interface UserMapper {
     List<User> list();
 
     List<User> list2(List<Integer> ages);
+
+    User login(Map<String, Object> root);
+
+    User login2(@Param("username")String username,@Param("password")String password);
 }

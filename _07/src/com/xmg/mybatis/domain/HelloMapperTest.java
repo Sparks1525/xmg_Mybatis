@@ -4,9 +4,7 @@ import com.xmg.mybatis.util.MybatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class HelloMapperTest {
 
@@ -96,5 +94,26 @@ public class HelloMapperTest {
         UserMapper mapper = session.getMapper(UserMapper.class);
         List<User> us = mapper.list2(Arrays.asList(18,123));
         System.out.println(us);
+    }
+
+
+    @Test
+    public void testLogin(){
+        Map<String,Object> root = new HashMap<>();
+        SqlSession session = MybatisUtil.openSession();
+        UserMapper mapper = session.getMapper(UserMapper.class);
+        root.put("username","update");
+        root.put("password","3");
+        User u = mapper.login(root);
+        System.out.println(u);
+    }
+
+    @Test
+    public void testLogin2(){
+        Map<String,Object> root = new HashMap<>();
+        SqlSession session = MybatisUtil.openSession();
+        UserMapper mapper = session.getMapper(UserMapper.class);
+        User u = mapper.login2("update","3");
+        System.out.println(u);
     }
 }
