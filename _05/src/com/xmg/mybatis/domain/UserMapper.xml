@@ -51,6 +51,7 @@
     </update>
 
     <!-- 抽取column -->
+    <!-- 如果sql有使用到resultMap,不能放在ResultMap之前 -->
     <sql id="user_column">
         id,name,email,age,borndate
     </sql>
@@ -73,6 +74,7 @@
     </select>
 
     <!-- 提取SQL -->
+    <!-- 如果sql有使用到resultMap,不能放在ResultMap之前 -->
     <sql id="user_where">
         <where>
             <if test="name!=null">
