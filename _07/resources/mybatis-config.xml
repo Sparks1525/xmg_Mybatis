@@ -15,6 +15,7 @@
     <!-- 为类型添加别名 -->
     <typeAliases>
         <typeAlias type="com.xmg.mybatis.domain.User" alias="User"/>
+        <package name="com.xmg.mybatis.domain"/><!-- 设置注解 @Alias("User") -->
     </typeAliases>
 
     <!-- 环境?? default对应的id,代表mybatis这次默认使用的数据库环境 -->
