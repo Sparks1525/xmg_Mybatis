@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xmg.mybatis.cache.domain.UserMapper">
+
+
+    <cache/>
+
+
+    <!-- 代表结果集和对象的映射关系 resultMapping
+        type:映射对应的类型是谁?
+        id:给这个映射关系起一个名字;
+    -->
+    <resultMap id="user_mapping" type="User">
+        <!--<id column="" property="" javaType="" jdbcType=""/>-->
+        <!-- id/result都可以用来映射列到属性,
+            id一般用于主键;
+            result一般用户非主键字段;
+        -->
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="email" property="email"/>
+        <result column="age" property="age"/>
+        <result column="borndate" property="bornDate"/>
+    </resultMap>
+
+    <!--
+        keyColumn:主键的列
+        keyProperty:主键对应的属性
+        useGeneratedKeys:true(使用数据库自动生成的主键id值设置到对象的OID中)
+        parameterType:参数的类型
+
+        keyProperty(仅对 insert 有用) 标记一个属性, MyBatis 会通过 getGeneratedKeys 或者通过 insert 语句的 selectKey 子元素设置它的值。 默认: 不设置。
+        keyColumn(仅对 insert 有用) 标记一个属性, MyBatis 会通过 getGeneratedKeys 或者通过 insert 语句的 selectKey 子元素设置它的值。 默认: 不设置。
+    -->
+    <insert id="add" keyColumn="id" keyProperty="id" useGeneratedKeys="true" flushCache="false">
+        insert into user(name,email,age,borndate) values (#{name},#{email},#{age},#{bornDate})
+    </insert>
+
+
+
+    <!-- 修改 -->
+    <update id="update" parameterType="User">
+        update user
+        <set>
+            <if test="name!=null">
+                name = #{name},
+            </if>
+            <if test="email!=null">
+                email=#{email},
+            </if>
+            age=#{age},
+            <if test="bornDate!=null">
+                borndate=#{bornDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- get
+        注意,一个SQL元素只能有一个resultMap或者一个resultType
+    -->
+    <select id="get" parameterType="long" resultMap="user_mapping" useCache="true">
+        select id,name,email,age,borndate from user where id = #{id}
+    </select>
+
+    <!-- delete -->
+    <delete id="delete" parameterType="long">
+        delete from user where id = #{id}
+    </delete>
+
+    <!-- list -->
+    <select id="list" resultMap="user_mapping" useCache="true">
+        select id,name,email,age,borndate from user
+        <!--
+            prefix:在内容面前加prefix的内容;
+            prefixOverrides:如果内容开头匹配设置的值,就去掉这个值
+            suffix:在内容结尾加suffix的内容;
+            suffixOverrides:如果内容结尾匹配设置的值,就去掉这个值
+        -->
+
+    </select>
+
+
+    <!-- list -->
+    <select id="list2" resultType="User" parameterType="java.util.List">
+        select id,name,email,age,borndate from user
+        <where>
+            age in
+            <foreach collection="list" close=")" item="age" open="(" separator=",">
+                #{age}
+            </foreach>
+        </where>
+
+        <!-- where age in(1 2 3) -->
+
+    </select>
+
+    <!-- temp -->
+    <!-- choose,when,otherwise -->
+    <select id="find1" parameterType="User" resultType="User">
+        select * from user where id='123'
+        <choose>
+            <when test="name != null">
+                and name like #{title}
+            </when>
+            <when test="email != null">
+                and email like #{email}
+            </when>
+            <otherwise>
+                and age = 19
+            </otherwise>
+        </choose>
+    </select>
+
+
+    <!-- trim,where,set -->
+    <!--
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+    ...
+    </trim>
+    -->
+    <select id="find2"
+            parameterType="User" resultType="User">
+        select * from user
+        <where>
+            <if test="name != null">
+                name = #{name}
+            </if>
+            <if test="email != null">
+                and email like #{email}
+            </if>
+            and age = 19
+        </where>
+    </select>
+
+    <!--
+    <trim prefix="SET" suffixOverrides=",">
+     ...
+    </trim>
+    -->
+    <update id="update2" parameterType="User">
+        update user
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="email != null">email=#{email},</if>
+            email=#{email},
+            <if test="borndate != null">borndate=#{bornDate}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--
+        <trim prefix="" prefixOverrides="" suffix="" suffixOverrides="" >
+        trim包含的动态SQL
+        </trim>
+        prefix – 如果trim元素包含的元素返回了一个字符串，在这个字符串之前插入prefix元素的内容。
+        prefixOverrides – 如果trim元素包含的元素返回了一个字符串，并且字符串的内容以prefixOverrides中的内容开头(可以包含管道符号)，那么使用prefix中的字符串替换内容的开头。
+        suffix – 如果trim元素包含的元素返回了一个字符串，在这个字符串之后插入suffix元素的内容。
+        suffixOverrides – 如果trim元素包含的元素返回了一个字符串，并且字符串的内容以suffixOverrides中的内容结尾(可以包含管道符号)，那么使用suffix中的字符串替换内容的结尾。
+    -->
+
+
+    <!--
+        foreach:
+        collection:collection属性的值有三个分别是list、array、map三种,分别对应的参数类型为:List、数组、map集合
+　　　　 item:表示在迭代过程中每一个元素的别名
+　　　　 index:表示在迭代过程中每次迭代到的位置（下标）
+　　　　 open:前缀
+　　　　 close:后缀
+　　　　 separator:分隔符,表示迭代时每个元素之间以什么分隔
+    -->
+    <select id="selectPostIn" resultType="User">
+        select *
+        from user
+        where age in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+
+
+    <sql id="user_where">
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+
+            <if test="beginAge>-1">
+                and name &gt;=#{beginAge}
+            </if>
+            <if test="endAge>-1">
+                and age &lt;=#{endAge}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="user_column">name,email,age,borndate</sql>
+
+
+    <select id="login" parameterType="hashmap" resultMap="user_mapping">
+        select <include refid="user_column"/>
+        from user
+        where name = #{username} and email =#{password}
+    </select>
+
+    <select id="login2" parameterType="hashmap" resultMap="user_mapping">
+        select <include refid="user_column"/>
+        from user
+        where name = #{username} and email =#{password}
+    </select>
+
+
+</mapper>

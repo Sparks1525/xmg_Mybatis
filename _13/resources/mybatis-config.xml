@@ -25,6 +25,7 @@
     <!-- 为类型添加别名 -->
     <typeAliases>
         <typeAlias type="com.xmg.mybatis.cache.domain.User" alias="User"/>
+        <typeAlias type="org.mybatis.caches.ehcache.EhcacheCache" alias="ehcache"/>
     </typeAliases>
 
     <!-- 环境?? default对应的id,代表mybatis这次默认使用的数据库环境 -->
