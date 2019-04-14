@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xmg.mybatis.one2many.DepartmentMapper">
+
+
+    <resultMap type="Department" id="dept_mapping">
+
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+
+       <!-- 映射一个集合
+        prperty:对象中集合属性;
+        column:要传入select中作为参数的值;因为在one2many中,从one方拿many方,就是要使用one方的主键作为值,查询many;
+        ofType:在集合中的对象的类型(不要使用javaType)
+        select:要发送的SQL
+
+        <collection property="emps" column="id" ofType="Employee" select="com.xmg.mybatis.one2many.EmployeeMapper.selectByDeptId"/>
+        -->
+
+        <!-- 使用内联的方式 -->
+        <collection property="emps" ofType="Employee">
+            <id column="eid" property="id"/>
+            <result column="ename" property="name"/>
+        </collection>
+    </resultMap>
+
+    <insert id="add" keyColumn="id" keyProperty="id" useGeneratedKeys="true"
+            parameterType="Department">
+        insert into dept(name) values (#{name})
+    </insert>
+
+
+    <!--
+        <select id="get" resultMap="dept_mapping">
+            select id,name from employee where id = #{id}
+        </select>
+    -->
+
+    <select id="get" resultMap="dept_mapping">
+        select d.id,d.name,e.id as eid,e.name as ename
+        from dept d left join employee e on  d.id = e.dept_id
+        where d.id=#{id}
+    </select>
+
+        <update id="updateRelation">
+            update employee set dept_id = #{deptId} where id = #{empId}
+        </update>
+
+
+
+
+    </mapper>
