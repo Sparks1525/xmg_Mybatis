@@ -40,15 +40,15 @@
     <select id="get" resultMap="employee_mapping">
         select id,name,dept_id from employee where id = #{id}
     </select>
-    
 
     <select id="list" resultMap="employee_mapping">
+        select id,name,dept_id from employee
+    </select>
+    
+
+    <select id="list2" resultMap="list_mapping">
         select e.id,e.name,d.id as did,d.name as dname
         from employee e left join dept d on e.dept_id = d.id
-    </select>
-
-    <select id="list2" resultMap="employee_mapping">
-        select id,name,dept_id from employee
     </select>
 
 
