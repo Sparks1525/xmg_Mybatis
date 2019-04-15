@@ -20,7 +20,7 @@
 
 
     <select id="get" resultMap="dept_mapping">
-        select id,name from employee where id = #{id}
+        select id,name from dept where id = #{id}
     </select>
 
 

@@ -21,7 +21,7 @@
 
 
     <!-- 内联的映射 -->
-    <resultMap id=" list_mapping" type="Employee">
+    <resultMap id="list_mapping" type="Employee">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <association property="dept" javaType="Department">

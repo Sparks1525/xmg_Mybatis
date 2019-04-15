@@ -51,6 +51,12 @@
         from employee e left join dept d on e.dept_id = d.id
     </select>
 
+    <!-- 这样写跟list一样,因为有dept_id,所以能根据association查询出dept -->
+    <select id="list3" resultMap="employee_mapping">
+        select e.id,e.name,d.id as did,e.dept_id,d.name as dname
+        from employee e left join dept d on e.dept_id = d.id
+    </select>
+
 
     <select id="autoComplateList" resultType="Employee">
         select id,name from employee
