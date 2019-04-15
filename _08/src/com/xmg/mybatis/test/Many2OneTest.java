@@ -19,6 +19,8 @@ public class Many2OneTest {
         deptMapper = MybatisUtil.openSession().getMapper(DepartmentMapper.class);
     }
 
+
+
     @Test
     public void testSave(){
 
@@ -39,4 +41,23 @@ public class Many2OneTest {
         session.commit();
         session.close();
     }
+
+    @Test
+    public void testGet(){
+
+        SqlSession session = MybatisUtil.openSession();
+
+        empMapper = session.getMapper(EmployeeMapper.class);
+
+        // 这里无法从employee拿到dept,因为没有在EmployeeMapper中添加association关联关系
+        Employee e = empMapper.get(1L);
+        Department d = e.getDept();
+        System.out.println(e);
+        System.out.println(d);
+
+        session.close();
+    }
+
+
+
 }
