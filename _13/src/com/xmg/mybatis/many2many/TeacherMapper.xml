@@ -8,7 +8,7 @@
     <resultMap type="Teacher" id="tea_mapping">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
-        <collection property="students" ofType="Student" column="id" select="com.xmg.mybatis.many2many.StudentMapper.getByTeacher"
+        <collection property="students" ofType="Student" column="id" select="com.xmg.mybatis.many2many.StudentMapper.getByTeacher"/>
     </resultMap>
 
     <insert id="add" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
