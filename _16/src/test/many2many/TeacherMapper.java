@@ -7,6 +7,9 @@ import java.util.List;
 public interface TeacherMapper {
 
     void add(Teacher t);
+
+    int insertAndgetkey(Teacher t);
+
     void resovleRelation(@Param("teaId") Long teaId, @Param("stuId") Long stuId);
 
     Teacher get(long id);
