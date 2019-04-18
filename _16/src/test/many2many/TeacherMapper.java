@@ -8,7 +8,8 @@ public interface TeacherMapper {
 
     void add(Teacher t);
 
-    int insertAndgetkey(Teacher t);
+    // 这里返回值要嘛void要嘛Integer,不能为Long,因为这不是返回id值,返回的id值在对象id字段里
+    Integer insertAndgetkey(Teacher t);
 
     void resovleRelation(@Param("teaId") Long teaId, @Param("stuId") Long stuId);
 

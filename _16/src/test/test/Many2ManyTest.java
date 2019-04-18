@@ -46,6 +46,12 @@ public class Many2ManyTest {
         studentMapper.add(s1);
         studentMapper.add(s2);
 
+
+        System.out.println(s1.getId());
+        System.out.println(s2.getId());
+        System.out.println(t1.getId());
+        System.out.println(t2.getId());
+
         for(Student s : t1.getStudents()){
             teacherMapper.resovleRelation(t1.getId(),s.getId());
         }
@@ -83,22 +89,25 @@ public class Many2ManyTest {
         t2.getStudents().add(s1);
         t2.getStudents().add(s2);
 
-        long tId1 = (long)teacherMapper.insertAndgetkey(t1);
-        long tId2 = (long)teacherMapper.insertAndgetkey(t2);
+        teacherMapper.insertAndgetkey(t1);
+        teacherMapper.insertAndgetkey(t2);
 
-        long sId1 = (long)studentMapper.insertAndgetkey(s1);
-        long sId2 = (long)studentMapper.insertAndgetkey(s2);
+        studentMapper.insertAndgetkey(s1);
+        studentMapper.insertAndgetkey(s2);
 
-        System.out.println(tId1);
-        System.out.println(tId2);
-        System.out.println(sId1);
-        System.out.println(sId2);
+        System.out.println(s1.getId());
+        System.out.println(s2.getId());
+        System.out.println(t1.getId());
+        System.out.println(t2.getId());
 
 
-//        teacherMapper.resovleRelation(tId1,sId1);
-//        teacherMapper.resovleRelation(tId1,sId2);
-//        teacherMapper.resovleRelation(tId2,sId1);
-//        teacherMapper.resovleRelation(tId2,sId2);
+        for(Student s : t1.getStudents()){
+            teacherMapper.resovleRelation(t1.getId(),s.getId());
+        }
+
+        for(Student s : t2.getStudents()){
+            teacherMapper.resovleRelation(t2.getId(),s.getId());
+        }
 
         session.commit();
         session.close();

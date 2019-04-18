@@ -15,7 +15,6 @@
     </settings>
 
     <typeAliases>
-        <typeAlias type="test.domain.User" alias="User"/>
 
         <typeAlias type="test.many2one.Employee" alias="M2OEmployee"/>
         <typeAlias type="test.many2one.Department" alias="M2ODepartment"/>
@@ -40,7 +39,6 @@
     </environments>
 
     <mappers>
-        <mapper resource="test/domain/UserMapper.xml"/>
 
         <mapper resource="test/many2one/EmployeeMapper.xml"/>
         <mapper resource="test/many2one/DepartmentMapper.xml"/>
