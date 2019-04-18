@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="test.many2many.TeacherMapper">
+    <resultMap id="tea_mapping" type="Teacher">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection column="id" property="students" ofType="Student"
+                    select="test.many2many.StudentMapper.getByTeacher"/>
+    </resultMap>
+
+    <resultMap id="tea_mapping2" type="Teacher">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection property="students" ofType="Student">
+            <id column="sid" property="id"/>
+            <result column="sname" property="name"/>
+        </collection>
+    </resultMap>
+
+    <insert id="add" keyColumn="id" keyProperty="id" useGeneratedKeys="true" parameterType="Teacher">
+        insert into teacher(name) values (#{name})
+    </insert>
+
+    <insert id="resovleRelation">
+        insert into stu_tea(teacher_id,student_id) values(#{teaId},#{stuId})
+    </insert>
+
+    <select id="get" resultMap="tea_mapping" parameterType="long">
+        select id,name from teacher where id=#{id}
+    </select>
+
+    <select id="list" resultMap="tea_mapping">
+        select id,name from teacher
+    </select>
+
+    <select id="get2" resultMap="tea_mapping2" parameterType="long">
+        select s.id as sid,s.name as sname,t.id ,t.name
+        from teacher t
+        left join stu_tea st on t.id=st.teacher_id
+        join student s on s.id = st.student_id
+        where t.id=#{id}
+    </select>
+
+    <select id="list2" resultMap="tea_mapping2">
+        select s.id as sid,s.name as sname,t.id ,t.name
+        from teacher t
+        left join stu_tea st on t.id=st.teacher_id
+        join student s on s.id = st.student_id
+    </select>
+
+
+</mapper>

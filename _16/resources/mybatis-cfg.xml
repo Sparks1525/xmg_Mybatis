@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+
+<configuration>
+
+    <properties resource="druid.properties"/>
+    
+    <settings>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="lazyLoadTriggerMethods" value="clone"/>
+    </settings>
+
+    <typeAliases>
+        <typeAlias type="test.domain.User" alias="User"/>
+
+        <typeAlias type="test.many2one.Employee" alias="M2OEmployee"/>
+        <typeAlias type="test.many2one.Department" alias="M2ODepartment"/>
+
+        <typeAlias type="test.one2many.Employee" alias="O2MEmployee"/>
+        <typeAlias type="test.one2many.Department" alias="O2MDepartment"/>
+
+        <typeAlias type="test.many2many.Student" alias="Student"/>
+        <typeAlias type="test.many2many.Teacher" alias="Teacher"/>
+    </typeAliases>
+
+    <environments default="env1">
+        <environment id="env1">
+            <transactionManager type="JDBC"/>
+            <dataSource type="test.druid.DruidDataSource">
+                <property name="driverClassName" value="${driverClassName}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="test/domain/UserMapper.xml"/>
+
+        <mapper resource="test/many2one/EmployeeMapper.xml"/>
+        <mapper resource="test/many2one/DepartmentMapper.xml"/>
+
+        <mapper resource="test/one2many/EmployeeMapper.xml"/>
+        <mapper resource="test/one2many/DepartmentMapper.xml"/>
+
+        <mapper resource="test/many2many/StudentMapper.xml"/>
+        <mapper resource="test/many2many/TeacherMapper.xml"/>
+    </mappers>
+</configuration>

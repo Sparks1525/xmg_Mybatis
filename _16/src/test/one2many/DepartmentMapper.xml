@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="test.one2many.DepartmentMapper">
+    <resultMap id="dept_mapping" type="O2MDepartment">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection property="emps" column="id" ofType="O2MEmployee"
+                    select="test.one2many.EmployeeMapper.getEmpByDeptId"/>
+    </resultMap>
+
+    <resultMap id="dept_mapping2" type="O2MDepartment">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection property="emps" ofType="O2MEmployee">
+            <id column="eid" property="id"/>
+            <result column="ename" property="name"/>
+        </collection>
+    </resultMap>
+
+
+
+
+    <insert id="add" keyColumn="id" keyProperty="id" useGeneratedKeys="true" parameterType="O2MDepartment">
+        insert into department(name) values(#{name})
+    </insert>
+
+    <select id="get" resultMap="dept_mapping" parameterType="long">
+        select id,name from department where id=#{id}
+    </select>
+
+    <select id="list" resultMap="dept_mapping">
+        select id,name from department
+    </select>
+
+    <select id="get2" resultMap="dept_mapping2" parameterType="long">
+        select e.id as eid,e.name as ename,e.dept_id,d.id,d.name
+        from department d left join employee e on e.dept_id = d.id
+        where d.id=#{id}
+    </select>
+
+    <select id="list2" resultMap="dept_mapping2">
+        select e.id as eid,e.name as ename,e.dept_id,d.id,d.name
+        from department d left join employee e on e.dept_id = d.id
+    </select>
+
+    <!--
+        <resultMap id="dept_mapping3" type="O2MDepartment">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+            <association property="emps" column="id" javaType="O2MEmployee"
+                         select="test.one2many.EmployeeMapper.getEmpByDeptId"/>
+        </resultMap>
+
+        <select id="get3" resultMap="dept_mapping3" parameterType="long">
+            select id,name from department where id=#{id}
+        </select>
+
+        报错:
+        org.apache.ibatis.executor.ExecutorException: Statement test.one2many.EmployeeMapper.
+        getEmpByDeptId returned more than one row, where no more than one was expected
+     -->
+
+
+
+</mapper>
