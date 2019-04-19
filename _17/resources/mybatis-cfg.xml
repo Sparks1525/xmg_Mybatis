@@ -18,6 +18,7 @@
         <!-- 按需加载 -->
         <setting name="aggressiveLazyLoading" value="false"/>
         <!-- 配置哪些方法会触发所有延迟加载对象加载  -->
+        <setting name="lazyLoadTriggerMethods" value="close"/>
 
         <!--
         测试Mybatis懒加载不能直接用toString方法
@@ -31,7 +32,7 @@
         <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode"/>
         -->
 
-        <setting name="lazyLoadTriggerMethods" value="close"/>
+
     </settings>
 
 
