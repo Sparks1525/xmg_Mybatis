@@ -1,10 +1,8 @@
-package test.cache.domain;
+package test.cache;
 
-import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 
-@Alias("User") // 需要在mybatis-config.xml中配置扫描包的路径
 public class User {
 
     private long id;

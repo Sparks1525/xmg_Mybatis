@@ -1,11 +1,9 @@
-package test.cache.test;
+package test.cache;
 
-import com.xmg.mybatis.cache.domain.User;
-import com.xmg.mybatis.cache.mapper.UserMapper;
-import com.xmg.mybatis.util.MybatisUtil;
 import org.apache.ibatis.cache.Cache;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
+import test.util.MybatisUtil;
 
 import java.util.List;
 
@@ -48,6 +46,7 @@ public class CacheTest {
         session.close();
 
     }
+
 
     @Test
     public void testList(){
