@@ -5,6 +5,8 @@
 
 <mapper namespace="com.xmg.mybatis.domain.UserMapper">
 
+    <cache type="ehcache"/> <!-- alias -->
+
     <!-- 代表结果集和对象的映射关系 resultMapping
         type:映射对应的类型是谁?
         id:给这个映射关系起一个名字;
